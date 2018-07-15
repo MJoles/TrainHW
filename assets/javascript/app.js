@@ -45,8 +45,8 @@ firebase.initializeApp(config);
     // Alert
     alert("New train added!");
   
-    console.log(frequency);
-    var tFrequency = frequency;
+    
+   
 
     var tTime = "00:00";
     // Prettify the train start
