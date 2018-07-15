@@ -62,47 +62,17 @@ firebase.initializeApp(config);
   // 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
   dataRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
   
-   /* console.log(childSnapshot.val());
-  
-    // Store everything into a variable.
-    var train = childSnapshot.val().train;
-    var destination = childSnapshot.val().destination;
-    var firstTrainTime = childSnapshot.val().firstTrainTime;
-    var frequency = childSnapshot.val().frequency;
 
-    
-  
-    // Train Info
-    console.log(train);
-    console.log(destination);
-    console.log(firstTrainTime);
-    // Calculate the next arrival
-    // To calculate the next train arrival
-    var nextArrival = moment().diff(moment(frequency, "HH:mm"), "minutesAway");
-    console.log(nextArrival);
-  
-    // Calculate the total minutes away
-    var minutesAway = nextArrival * frequency;
-    console.log(minutesAway);
+  var trainName = childSnapshot.val().train;
+  var trainDestination = childSnapshot.val().destination;
+  var trainStart = childSnapshot.val().firstTrainTime;
+  var trainFrequency = childSnapshot.val().frequency;
 
-    // Minute Until Train
-    var tMinutesTillTrain = tFrequency - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-    // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-*/
-var trainName = childSnapshot.val().train;
- var trainDestination = childSnapshot.val().destination;
- var trainStart = childSnapshot.val().firstTrainTime;
- var trainFrequency = childSnapshot.val().frequency;
-
-var startTimeConverted = moment(trainStart, "HH:mm")
-var timeDiff = moment().diff(moment(startTimeConverted), "minutes");
-var timeRemainder = timeDiff % trainFrequency;
-var minToTrain = trainFrequency - timeRemainder;
-var nextTrain = moment().add(minToTrain, "minutes").format("HH:mm");
+  var startTimeConverted = moment(trainStart, "HH:mm")
+  var timeDiff = moment().diff(moment(startTimeConverted), "minutes");
+  var timeRemainder = timeDiff % trainFrequency;
+  var minToTrain = trainFrequency - timeRemainder;
+  var nextTrain = moment().add(minToTrain, "minutes").format("HH:mm");
 
 console.log(minToTrain);
     // Add each train's data into the table
