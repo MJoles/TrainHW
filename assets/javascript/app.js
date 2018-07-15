@@ -1,14 +1,6 @@
-/* global firebase moment */
-// Steps to complete:
 
-// 1. Initialize Firebase
-// 2. Create button for adding new employees - then update the html + update the database
-// 3. Create a way to retrieve employees from the employee database.
-// 4. Create a way to calculate the months worked. Using difference between start and current time.
-//    Then use moment.js formatting to set difference in months.
-// 5. Calculate Total billed
 
-// 1. Initialize Firebase
+// Initialize Firebase
 var config = {
   apiKey: "AIzaSyBLtnPlW7hn3WWySQEf1mpk6qYmTPDBY34",
   authDomain: "trainhw-a9976.firebaseapp.com",
@@ -20,7 +12,7 @@ var config = {
 
 firebase.initializeApp(config);
   
-  var database = firebase.database();
+  var dataRef = firebase.database();
   
   // 2. Button for adding Trains
   $("#submit-btn").on("click", function(event) {
@@ -41,7 +33,8 @@ firebase.initializeApp(config);
     };
   
     // Uploads train data to the database
-    database.ref().push(newTrain);
+    dataRef.ref().push(newTrain);
+    
   
     // Logs everything to console
     console.log(newTrain.train);
@@ -75,24 +68,35 @@ firebase.initializeApp(config);
     console.log(destination);
     console.log(firstTrainTime);
     console.log(frequency);
-  */
+    var tFrequency = frequency;
+
+    var tTime = "00:00";
     // Prettify the employee start
-    var firstTrainSchedule = moment.unix(firstTrainSchedule).format("HH:MM");
+    var firstTrainSchedule = moment.unix(tTime).format("HH:MM");
   
-    // Calculate the months worked using hardcore math
+    // Calculate the next arrival
     // To calculate the next train arrival
-    var nextArrival = moment().diff(moment(firstTrain, "HH:MM"), "minutesAway");
+    var nextArrival = moment().diff(moment(frequency, "HH:MM"), "minutesAway");
     console.log(nextArrival);
   
-    // Calculate the total billed rate
+    // Calculate the total minutes away
     var minutesAway = nextArrival * trainFrequency;
     console.log(minutesAway);
-  
+
+    // Minute Until Train
+    var tMinutesTillTrain = tFrequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+
     // Add each train's data into the table
     $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" +
     firstTrainSchedule + "</td><td>" + nextArrival + "</td><td>" + trainFrequency + "</td><td>" + minutesAway + "</td></tr>");
   
-  //});
+  });
   
   // Example Time Math
   // -----------------------------------------------------------------------------
@@ -101,4 +105,4 @@ firebase.initializeApp(config);
   
   // We know that this is 15 months.
   // Now we will create code in moment.js to confirm that any attempt we use meets this test case
-  
+  */
